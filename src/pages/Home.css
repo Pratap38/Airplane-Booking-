@@ -1,0 +1,14 @@
+@keyframes fly-in {
+  0% {
+    transform: translateX(-300px) ;
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) ;
+    opacity: 1;
+  }
+}
+
+.animate-fly-in {
+  animation: fly-in 1.5s ease-out forwards;
+}

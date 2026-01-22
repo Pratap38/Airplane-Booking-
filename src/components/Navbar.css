@@ -1,0 +1,34 @@
+.plane-fly {
+  animation: flyToLogin 6s ease-in-out infinite;
+}
+
+/* Fly → disappear → reset hidden */
+@keyframes flyToLogin {
+  /* Hidden before start */
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  /* Fade in */
+  10% {
+    opacity: 1;
+  }
+
+  /* Fly toward Login button */
+  50% {
+    transform: translateX(520px) translateY(-6px) rotate(6deg);
+    opacity: 1;
+  }
+
+  /* Start disappearing */
+  65% {
+    opacity: 0;
+  }
+
+  /* Fully hidden while resetting */
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+}
