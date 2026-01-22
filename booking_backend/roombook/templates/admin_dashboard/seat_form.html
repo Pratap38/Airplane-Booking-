@@ -1,0 +1,35 @@
+{% extends 'admin_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6">{{ title }}</h1>
+
+    <form method="POST" class="bg-white p-6 rounded shadow-md">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <div class="space-y-4">
+            {% for field in form %}
+            <div>
+                <label class="block font-semibold mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <p class="text-sm text-gray-500">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                <p class="text-sm text-red-500">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-6 flex space-x-2">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Save
+            </button>
+            <a href="{% url 'admin_seat_list' %}" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

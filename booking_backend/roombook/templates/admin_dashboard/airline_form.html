@@ -1,0 +1,32 @@
+{% extends 'admin_dashboard/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mx-auto py-8 max-w-lg">
+    <h1 class="text-3xl font-bold mb-6">{{ title }}</h1>
+
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+            {{ field|add_class:"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+            {% if field.errors %}
+            <p class="text-red-500 text-xs italic mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Save
+            </button>
+            <a href="{{ back_url|default_if_none:'/admin-panel/admin-dashboard/airlines/' }}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

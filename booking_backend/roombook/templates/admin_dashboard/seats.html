@@ -1,0 +1,44 @@
+{% extends 'admin_dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6">Seats</h1>
+
+    <a href="{% url 'admin_seat_add' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">
+        Add Seat
+    </a>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4">Flight</th>
+                    <th class="py-2 px-4">Seat Number</th>
+                    <th class="py-2 px-4">Class</th>
+                    <th class="py-2 px-4">Reserved</th>
+                    <th class="py-2 px-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for seat in seats %}
+                <tr class="border-b">
+                    <td class="py-2 px-4">{{ seat.flight }}</td>
+                    <td class="py-2 px-4">{{ seat.seat_number }}</td>
+                    <td class="py-2 px-4 capitalize">{{ seat.seat_class }}</td>
+                    <td class="py-2 px-4">{% if seat.is_reserved %}Yes{% else %}No{% endif %}</td>
+                    <td class="py-2 px-4 space-x-2">
+                        <a href="{% url 'admin_seat_edit' seat.id %}" class="text-blue-500 hover:underline">Edit</a>
+                        <a href="{% url 'admin_seat_delete' seat.id %}" class="text-red-500 hover:underline">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">No seats found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

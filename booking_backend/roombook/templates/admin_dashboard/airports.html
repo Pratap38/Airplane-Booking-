@@ -1,0 +1,40 @@
+{% extends 'admin_dashboard/base.html' %}
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6">Airports</h1>
+
+    <a href="{% url 'admin_airport_add' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">
+        Add Airport
+    </a>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4">Code</th>
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">City</th>
+                    <th class="py-2 px-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for airport in airports %}
+                <tr class="border-b">
+                    <td class="py-2 px-4">{{ airport.code }}</td>
+                    <td class="py-2 px-4">{{ airport.name }}</td>
+                    <td class="py-2 px-4">{{ airport.city }}</td>
+                    <td class="py-2 px-4 space-x-2">
+                        <a href="{% url 'admin_airport_edit' airport.id %}" class="text-blue-500 hover:underline">Edit</a>
+                        <a href="{% url 'admin_airport_delete' airport.id %}" class="text-red-500 hover:underline">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4">No airports found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

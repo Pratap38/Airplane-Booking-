@@ -1,0 +1,74 @@
+<!-- templates/admin_dashboard/dashboard.html -->
+{% extends 'admin_dashboard/base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Dashboard Overview</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Card 1 -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500">Total Revenue</p>
+                <p class="text-3xl font-bold">${{ total_revenue|floatformat:2 }}</p>
+            </div>
+            <i class="fas fa-dollar-sign text-4xl text-green-500"></i>
+        </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500">Confirmed Bookings</p>
+                <p class="text-3xl font-bold">{{ total_bookings }}</p>
+            </div>
+            <i class="fas fa-check-circle text-4xl text-blue-500"></i>
+        </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500">Upcoming Flights</p>
+                <p class="text-3xl font-bold">{{ upcoming_flights }}</p>
+            </div>
+            <i class="fas fa-plane text-4xl text-purple-500"></i>
+        </div>
+    </div>
+</div>
+
+<h2 class="text-xl font-bold mb-4">Recent Bookings</h2>
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="w-full text-left">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="p-4">ID</th>
+                <th class="p-4">Passenger</th>
+                <th class="p-4">Flight</th>
+                <th class="p-4">Date</th>
+                <th class="p-4">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in recent_bookings %}
+            <tr class="border-t">
+                <td class="p-4">#{{ booking.id }}</td>
+                <td class="p-4">{{ booking.passenger_name }}</td>
+                <td class="p-4">{{ booking.flight.flight_number }}</td>
+                <td class="p-4">{{ booking.flight.departure|date:"M d, Y" }}</td>
+                <td class="p-4">
+                    <span class="px-2 py-1 text-xs rounded-full 
+                        {% if booking.status == 'confirmed' %}bg-green-100 text-green-800
+                        {% elif booking.status == 'cancelled' %}bg-red-100 text-red-800
+                        {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                        {{ booking.status }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="p-4 text-center text-gray-500">No bookings yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
